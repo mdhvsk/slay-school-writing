@@ -10,7 +10,7 @@ interface Props {
     onResponse: (prompt: string, isParaphrase: string, paragraph: string) => void
 }
 
-const QueryBox2: React.FC<Props> = ({isHome, onResponse}) => {
+const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
     const [formData, setFormData] = useState({
         prompt: '',
         paraphrase: false,
@@ -21,7 +21,37 @@ const QueryBox2: React.FC<Props> = ({isHome, onResponse}) => {
     const messageRef = useRef<HTMLTextAreaElement>(null);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-    
+    const [fileName, setFileName] = useState<string>('');
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+
+        setFileName(file.name);
+
+        if (file.type === 'application/pdf') {
+            // For PDF files, we need to use a PDF.js or similar library
+            console.log('PDF files require additional processing');
+            // Implement PDF reading logic here
+        } else {
+            const text = await readFileContent(file);
+            setFormData(prevState => ({
+                ...prevState,
+                ["prompt"]: text
+            }));
+            updateCounts(text)
+        }
+    };
+
+    const readFileContent = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (event) => resolve(event.target?.result as string);
+            reader.onerror = (error) => reject(error);
+            reader.readAsText(file);
+        });
+    };
     const updateCounts = (text: String) => {
         setCharCount(text.length);
         setWordCount(text.trim() === '' ? 0 : text.trim().split(/\s+/).length);
@@ -51,12 +81,16 @@ const QueryBox2: React.FC<Props> = ({isHome, onResponse}) => {
         try {
             setIsLoading(true)
 
-            
+            if(formData.prompt.length > 600) {
+                setIsLoading(false)
+
+                return 
+            }
             const output_paragraph = await paraphraseApi(formData.prompt, formData.paraphrase);
 
-            if(isHome){
+            if (isHome) {
                 const output_summary = await summarizeText(formData.prompt);
-                router.push({pathname: '/output2', query: {prompt: formData.prompt, paraphrase: formData.paraphrase, output: output_paragraph, summary: output_summary} });
+                router.push({ pathname: '/output2', query: { prompt: formData.prompt, paraphrase: formData.paraphrase, output: output_paragraph, summary: output_summary } });
             } else {
                 onResponse(formData.prompt, String(formData.paraphrase), output_paragraph)
                 setFormData(prevState => ({
@@ -64,7 +98,7 @@ const QueryBox2: React.FC<Props> = ({isHome, onResponse}) => {
                     ["prompt"]: ""
                 }));
             }
-            
+
             console.log(output_paragraph)
             setIsLoading(false);
 
@@ -72,7 +106,7 @@ const QueryBox2: React.FC<Props> = ({isHome, onResponse}) => {
             console.log(err);
             setIsLoading(false);
         }
-        
+
     }
 
     useEffect(() => {
@@ -87,6 +121,10 @@ const QueryBox2: React.FC<Props> = ({isHome, onResponse}) => {
         }
     };
 
+    const handleFileClick = () => {
+        fileInputRef.current?.click();
+      };
+
     return (
         <div className='max-w-3xl mx-auto space-y-4 '>
 
@@ -97,7 +135,6 @@ const QueryBox2: React.FC<Props> = ({isHome, onResponse}) => {
                     onChange={handleChange}
                     value={formData.prompt}
                     ref={messageRef}
-                    maxLength={600}
                     placeholder="Write a paragraph and press 'SLAY IT'"
                     className="w-full p-6 bg-gray-800 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
@@ -105,10 +142,22 @@ const QueryBox2: React.FC<Props> = ({isHome, onResponse}) => {
             </div>
 
             <div className="flex justify-between items-center space-x-2">
-                <button className="flex items-center bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-xs">
+                <input
+                    type="file"
+                    accept=".txt,.docx,.pdf"
+                    onChange={handleFileChange}
+                    ref={fileInputRef}
+                    className="sr-only"
+                />
+                <div className='flex items-center'>
+                <button className="flex items-center bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-xs mr-2" onClick={handleFileClick}>
                     <Paperclip size={16} className="mr-2" />
                     Add content
                 </button>
+                {fileName && <p className="py-2">Selected file: {fileName}</p>}
+
+                </div>
+
                 <div className={`flex items-center text-xs rounded-md text-right ${charCount < 600 ? 'text-gray-500' : 'text-red-500'
                     }`}>
                     {wordCount} words | {charCount} chars

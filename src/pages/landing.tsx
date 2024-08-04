@@ -3,6 +3,7 @@ import { Search, ChevronDown, Plus, ExternalLink, Paperclip, ArrowRight } from '
 import Header from '@/components/header';
 import QueryBox from '@/components/query_box';
 import Sidebar from '@/components/sidebar';
+import QueryBox2 from '@/components/query_box2';
 
 const HomePage = () => {
 
@@ -24,7 +25,7 @@ const HomePage = () => {
                 Good afternoon, Madhav
             </h2>
 
-            <QueryBox isHome={true} />
+            <QueryBox2 isHome={true} onResponse={()=>{}} />
 
             <div className="mb-4 w-full mx-auto max-w-[75%]">
                 <h3 className="flex items-center text-lg mb-4">
