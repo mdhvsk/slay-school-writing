@@ -5,6 +5,7 @@ import QueryBox from '@/components/query_box';
 import Header from '@/components/header';
 import ResponseInstance from '@/components/response_instance';
 import { QueryResponse } from '@/util/model';
+import QueryBox2 from '@/components/query_box2';
 
 const OutputBlock = () => {
     const { prompt, paraphrase, output, summary } = router.query;
@@ -49,16 +50,16 @@ const OutputBlock = () => {
     }
 
     return (
-        <div className="bg-gray-900 text-white min-h-screen p-8">
+        <div className="bg-gray-900 text-white min-h-screen px-8 py-4">
             <Header />
             <div className="max-w-3xl mx-auto space-y-4">
-                <strong className='text-2xl'>{summary} HI HI</strong>
+                <strong className='text-2xl'>{summary}</strong>
 
                 {responses.map((response) => (
                     <ResponseInstance response={response}/>
                 ))}
 
-                <div className="pb-8 flex justify-between items-center text-gray-400 text-sm ">
+                <div className="pb-2 flex justify-between items-center text-gray-400 text-sm ">
                     <div className="flex space-x-2">
                     {isCopied && (<p className='text-gray-500 animate-fade-in-out'>Copied!</p>)}
                     </div>
@@ -70,7 +71,7 @@ const OutputBlock = () => {
                 </div>
 
             </div>
-            <QueryBox isHome={false}/>
+            <QueryBox2 isHome={false} onResponse={addResponse}/>
 
 
         </div>

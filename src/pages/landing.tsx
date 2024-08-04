@@ -19,10 +19,7 @@ const HomePage = () => {
         <div className="bg-gray-900 text-gray-200 min-h-screen p-8">
             <Header />
 
-            <Sidebar>
-                {/* Sidebar content goes here */}
-                
-            </Sidebar>
+            <Sidebar/>                
             <h2 className="text-4xl font-light mb-8 flex justify-center">
                 Good afternoon, Madhav
             </h2>
