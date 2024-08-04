@@ -4,6 +4,7 @@ import Header from '@/components/header';
 import QueryBox from '@/components/query_box';
 import Sidebar from '@/components/sidebar';
 import QueryBox2 from '@/components/query_box2';
+import { getUserByEmail } from '@/service/supabaseService';
 
 const HomePage = () => {
 
@@ -24,7 +25,6 @@ const HomePage = () => {
             <h2 className="text-4xl font-light mb-8 flex justify-center">
                 Good afternoon, Madhav
             </h2>
-
             <QueryBox2 isHome={true} onResponse={()=>{}} />
 
             <div className="mb-4 w-full mx-auto max-w-[75%]">
