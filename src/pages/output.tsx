@@ -8,7 +8,7 @@ const OutputBlock = () => {
     const { prompt, paraphrase, output, summary } = router.query;
 
     const [displayedText, setDisplayedText] = useState('');
-
+    const [isCopied, setIsCopied] = useState(false)
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -32,6 +32,10 @@ const OutputBlock = () => {
             if (isString(output)) {
                 await navigator.clipboard.writeText(output);
                 console.log("Copied")
+                setIsCopied(true)
+                setTimeout(()=>{
+                    setIsCopied(false)
+                }, 2000)
 
             }
         } catch (e) {
@@ -50,6 +54,7 @@ const OutputBlock = () => {
                         <span className="text-white font-semibold">MA</span>
                     </div>
                     <div className="bg-gray-800 rounded-lg p-3 flex-grow">
+                    <h2><strong>Your prompt:</strong></h2>
                         <p>{prompt}</p>
                     </div>
                 </div>
@@ -60,9 +65,7 @@ const OutputBlock = () => {
                         <MessageSquare className="w-5 h-5 text-white" />
                     </div>
                     <div className="bg-gray-800 rounded-lg p-3 flex-grow">
-                        {paraphrase == "true" ? (<h2><strong>Paraphrase:</strong></h2>) : (<h2><strong>Academic:</strong></h2>)}
-                        {/* <p className="mb-4">{paraphrase === true (<p>Paraphrase</p>):(<p>Make more Scientific</p>)}</p> */}
-                        {/* <p className="mb-4">{output}</p> */}
+                        {paraphrase == "true" ? (<h2><strong>Paraphrase Results:</strong></h2>) : (<h2><strong>Academic Results:</strong></h2>)} 
                         <div className="mb-4">
                             {displayedText}
                             <span className="animate-pulse">|</span>
@@ -71,7 +74,7 @@ const OutputBlock = () => {
                 </div>
 
                 {/* Controls */}
-                <div className="pb-8 flex justify-between items-center text-gray-400 text-sm ">
+                <div className="flex justify-between items-center text-gray-400 text-sm ">
                     <div className="flex space-x-2">
                         <button className="p-1 hover:bg-gray-700 rounded" onClick={handleOnCopy}><Copy className="w-4 h-4" /></button>
 
@@ -84,14 +87,19 @@ const OutputBlock = () => {
                     </div>
                 </div>
 
+                <div className="pb-8 flex justify-between items-center text-gray-400 text-sm ">
+                    <div className="flex space-x-2">
+                    {isCopied && (<p className='text-gray-500 animate-fade-in-out'>Copied!</p>)}
+                    </div>
+
+                    <div className="flex space-x-2">
+                    {/* {isCopied && (<p className='text-gray-500 animate-fade-in-out'>Copied!</p>)} */}
+                    {/* {isCopied && (<p className='text-gray-500 animate-fade-in-out'>Copied!</p>)} */}
+                    </div>
+                </div>
+
             </div>
-            <QueryBox handleChange={function (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void {
-                throw new Error('Function not implemented.');
-            }} handleToggle={function (): void {
-                throw new Error('Function not implemented.');
-            }} handleSubmit={function (): void {
-                throw new Error('Function not implemented.');
-            }} />
+            <QueryBox isHome={false}/>
 
 
         </div>
