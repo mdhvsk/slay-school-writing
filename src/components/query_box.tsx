@@ -18,7 +18,7 @@ const QueryBox: React.FC<Props> = ({isHome}) => {
     const [wordCount, setWordCount] = useState(0);
     const [charCount, setCharCount] = useState(0);
     const messageRef = useRef<HTMLTextAreaElement>(null);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
     
     const updateCounts = (text: String) => {
@@ -49,11 +49,11 @@ const QueryBox: React.FC<Props> = ({isHome}) => {
         e.preventDefault()
         try {
             setIsLoading(true)
+
+            
             const output_paragraph = await paraphraseApi(formData.prompt, formData.paraphrase);
-
-
             const output_summary = await summarizeText(formData.prompt);
-            router.push({pathname: '/output', query: {prompt: formData.prompt, paraphrase: formData.paraphrase, output: output_paragraph, summary: output_summary} });
+            router.push({pathname: '/output2', query: {prompt: formData.prompt, paraphrase: formData.paraphrase, output: output_paragraph, summary: output_summary} });
             console.log(output_paragraph)
             setIsLoading(false);
 

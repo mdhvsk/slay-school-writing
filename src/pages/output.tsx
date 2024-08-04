@@ -3,14 +3,31 @@ import { MessageSquare, Copy, RotateCcw, ChevronLeft, ChevronRight, ThumbsUp, Th
 import router from 'next/router';
 import QueryBox from '@/components/query_box';
 import Header from '@/components/header';
+import { QueryResponse } from '@/util/model';
+
+
 
 const OutputBlock = () => {
-    const { prompt, paraphrase, output, summary } = router.query;
+    const { prompt, isParaphrase, output, summary } = router.query;
 
+    const [responses, setResponses] = useState<QueryResponse[]>([])
     const [displayedText, setDisplayedText] = useState('');
     const [isCopied, setIsCopied] = useState(false)
 
     const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        console.log("Did not reach dammit")
+
+        if(isString(prompt) && isString(isParaphrase) && isString(summary)){
+            console.log("Reached setting query response")
+            let query_response = new QueryResponse(prompt, isParaphrase, summary)
+            setResponses((prev) => [...prev, query_response])
+        }
+        else {
+            console.log("Did not reach dammit")
+        }
+    }, [])
 
     useEffect(() => {
         if (isString(output) && currentIndex < output.length) {
@@ -27,6 +44,8 @@ const OutputBlock = () => {
     const isString = (value: unknown): value is string => {
         return typeof value === 'string'
     }
+
+
     const handleOnCopy = async () => {
         try {
             if (isString(output)) {
@@ -65,7 +84,7 @@ const OutputBlock = () => {
                         <MessageSquare className="w-5 h-5 text-white" />
                     </div>
                     <div className="bg-gray-800 rounded-lg p-3 flex-grow">
-                        {paraphrase == "true" ? (<h2><strong>Paraphrase Results:</strong></h2>) : (<h2><strong>Academic Results:</strong></h2>)} 
+                        {isParaphrase == "true" ? (<h2><strong>Paraphrase Results:</strong></h2>) : (<h2><strong>Academic Results:</strong></h2>)} 
                         <div className="mb-4">
                             {displayedText}
                             <span className="animate-pulse">|</span>

@@ -1,15 +1,25 @@
 
-class QueryResponse {
+export class QueryResponse {
 
-    public query: string
-    public paraphrase: boolean 
-    public response: string | undefined 
+    private query: string
+    private isParaphrase: string
+    private response: string
 
-    constructor(query: string, paraphrase: boolean){
+    constructor(query: string, isParaphrase: string, response: string) {
         this.query = query
-        this.paraphrase = paraphrase
+        this.isParaphrase = isParaphrase
+        this.response = response
     }
 
-    
+    getQuery(): string {
+        return this.query
+    }
+
+    getisParaphrase(): string {
+        return this.isParaphrase
+    }
+    getResponse(): string {
+        return this.response
+    }
 
 }
