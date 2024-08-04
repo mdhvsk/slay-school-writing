@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 
 interface Props {
     isHome: boolean
+    
 }
 
 const QueryBox: React.FC<Props> = ({isHome}) => {
@@ -52,8 +53,14 @@ const QueryBox: React.FC<Props> = ({isHome}) => {
 
             
             const output_paragraph = await paraphraseApi(formData.prompt, formData.paraphrase);
-            const output_summary = await summarizeText(formData.prompt);
-            router.push({pathname: '/output2', query: {prompt: formData.prompt, paraphrase: formData.paraphrase, output: output_paragraph, summary: output_summary} });
+
+            if(isHome){
+                const output_summary = await summarizeText(formData.prompt);
+                router.push({pathname: '/output2', query: {prompt: formData.prompt, paraphrase: formData.paraphrase, output: output_paragraph, summary: output_summary} });
+            } else {
+
+            }
+            
             console.log(output_paragraph)
             setIsLoading(false);
 

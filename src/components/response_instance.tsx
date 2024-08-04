@@ -18,8 +18,6 @@ const ResponseInstance: React.FC<Props> = ({ response }) => {
   const paragraph = response.getResponse()
 
 
-
-
   useEffect(() => {
     if (isString(paragraph) && currentIndex < paragraph.length) {
       const timer = setTimeout(() => {
@@ -36,9 +34,6 @@ const ResponseInstance: React.FC<Props> = ({ response }) => {
     return typeof value === 'string'
   }
 
-  const isBoolean = (value: unknown): value is boolean => {
-    return typeof value === 'boolean'
-  }
   const handleOnCopy = async () => {
     try {
       if (isString(paragraph)) {

@@ -15,22 +15,21 @@ const OutputBlock = () => {
 
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    useEffect(() => {
 
-        if(isString(prompt) && isString(paraphrase) && isString(output)){
-
-        try {
-            const query_response = new QueryResponse(prompt, paraphrase, output);
-            console.log("Created QueryResponse:", query_response);
-            setResponses((prev) => [...prev, query_response]);
-          } catch (error) {
-            console.error("Error creating QueryResponse:", error);
-          }
-          
+    const addResponse = (query: unknown, isPara: unknown, paragraph: unknown) =>{
+        if(isString(query) && isString(isPara) && isString(paragraph)){
+            try {
+                const query_response = new QueryResponse(query, isPara, paragraph);
+                console.log("Created QueryResponse:", query_response);
+                setResponses((prev) => [...prev, query_response]);
+              } catch (error) {
+                console.error("Error creating QueryResponse:", error);
+              }
         }
-          
+    }
+    useEffect(() => {
+        addResponse(prompt, paraphrase, output)
     }, [])
-
 
 
     useEffect(() => {
@@ -49,22 +48,6 @@ const OutputBlock = () => {
         return typeof value === 'string';
     }
 
-    const handleOnCopy = async () => {
-        try {
-            if (isString(output)) {
-                await navigator.clipboard.writeText(output);
-                console.log("Copied");
-                setIsCopied(true);
-                setTimeout(()=>{
-                    setIsCopied(false);
-                }, 2000);
-
-            }
-        } catch (e) {
-            console.log(e);
-        }
-    }
-
     return (
         <div className="bg-gray-900 text-white min-h-screen p-8">
             <Header />
@@ -72,9 +55,7 @@ const OutputBlock = () => {
                 <strong className='text-2xl'>{summary} HI HI</strong>
 
                 {responses.map((response) => (
-
                     <ResponseInstance response={response}/>
-
                 ))}
 
                 <div className="pb-8 flex justify-between items-center text-gray-400 text-sm ">

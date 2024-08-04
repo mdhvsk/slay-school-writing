@@ -2,6 +2,7 @@ import React, { ChangeEvent, FormEvent, MouseEventHandler, useEffect, useRef, us
 import { Search, ChevronDown, Plus, ExternalLink, Paperclip, ArrowRight } from 'lucide-react';
 import Header from '@/components/header';
 import QueryBox from '@/components/query_box';
+import Sidebar from '@/components/sidebar';
 
 const HomePage = () => {
 
@@ -16,13 +17,17 @@ const HomePage = () => {
 
     return (
         <div className="bg-gray-900 text-gray-200 min-h-screen p-8">
-            <Header/>
+            <Header />
 
+            <Sidebar>
+                {/* Sidebar content goes here */}
+                
+            </Sidebar>
             <h2 className="text-4xl font-light mb-8 flex justify-center">
                 Good afternoon, Madhav
             </h2>
 
-            <QueryBox isHome={true}/>
+            <QueryBox isHome={true} />
 
             <div className="mb-4 w-full mx-auto max-w-[75%]">
                 <h3 className="flex items-center text-lg mb-4">
@@ -37,7 +42,7 @@ const HomePage = () => {
                         </div>
                     ))}
                 </div>
-            </div> 
+            </div>
 
             <div className="text-right w-full mx-auto max-w-[75%]">
                 <a href="#" className="text-blue-400 hover:underline flex items-center justify-end">
