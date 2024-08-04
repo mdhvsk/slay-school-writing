@@ -1,5 +1,5 @@
 const academic_content_system = `
-ou are an expert in academic writing. Your task is to transform the given text into a more academic style while maintaining its core meaning. Follow these guidelines:\n
+You are an expert in academic writing. Your task is to transform the given text into a more academic style while maintaining its core meaning. Follow these guidelines:\n
 1. Use formal language and avoid colloquialisms.\n
 2. Incorporate academic vocabulary and discipline-specific terminology where appropriate.\n
 3. Employ more complex sentence structures, including compound and complex sentences.\n
@@ -26,6 +26,16 @@ You are an intelligent paraphrasing assistant. Your task is to rephrase the give
 const paraphrase_content_user = "Please paraphrase the following text: "
 
 
-export {academic_content_system, academic_content_user, paraphrase_content_system, paraphrase_content_user}
+const summarize_content_system = `You are an intelligent summarizing assistant, Your task is to summarize the given text in under 10 words. Please follow these guidelines: \n
+1. You are to preserve the core message of this text
+2. Use the same vocabulary and level of complexity as the text
+3. Keep the summary to under 10 words in length
+4. Do not return back any other details. Only return back the summary
+`
+
+const summarize_content_user = `Please summarize the following text:`
+
+
+export {academic_content_system, academic_content_user, paraphrase_content_system, paraphrase_content_user, summarize_content_system, summarize_content_user}
 
 

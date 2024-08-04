@@ -17,7 +17,7 @@ export default async function handler(
     const { prompt, paraphrase } = req.body
 
     try {
-        if (paraphrase === "true") {
+        if (paraphrase === true) {
             const completion = await openai.chat.completions.create({
                 model: "gpt-4o-mini",
 
