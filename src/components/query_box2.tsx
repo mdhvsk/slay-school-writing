@@ -81,7 +81,7 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
         try {
             setIsLoading(true)
 
-            if(formData.prompt.length > 600) {
+            if(formData.prompt.length > 600 || formData.prompt.length == 0) {
                 setIsLoading(false)
 
                 return 
@@ -126,7 +126,7 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
       };
 
     return (
-        <div className='max-w-3xl mx-auto space-y-4 '>
+        <div className='max-w-3xl mx-auto space-y-2 '>
 
             <div className="flex flex-col items-center justify-center space-x-2 ">
                 <textarea
@@ -144,7 +144,7 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
             <div className="flex justify-between items-center space-x-2">
                 <input
                     type="file"
-                    accept=".txt,.docx,.pdf"
+                    accept=".txt,.docx,.pdf,.doc"
                     onChange={handleFileChange}
                     ref={fileInputRef}
                     className="sr-only"
@@ -158,7 +158,7 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
 
                 </div>
 
-                <div className={`flex items-center text-xs rounded-md text-right ${charCount < 600 ? 'text-gray-500' : 'text-red-500'
+                <div className={`flex items-center text-xs rounded-md text-right ${charCount < 601 ? 'text-gray-500' : 'text-red-500'
                     }`}>
                     {wordCount} words | {charCount} chars
                 </div>
@@ -168,7 +168,7 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
             <div className="flex justify-between items-center space-x-2">
                 <ParaphraseToggle onToggle={handleToggle} />
 
-                <button className="flex items-center bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-md" onClick={handleSubmit}>
+                <button className="flex items-center bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-md text-md" onClick={handleSubmit}>
                     SLAY IT
                     <Sparkles size={16} className="mx-2" />
 

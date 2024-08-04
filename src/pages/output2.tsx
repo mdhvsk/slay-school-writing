@@ -63,11 +63,6 @@ const OutputBlock = () => {
                     <div className="flex space-x-2">
                     {isCopied && (<p className='text-gray-500 animate-fade-in-out'>Copied!</p>)}
                     </div>
-
-                    <div className="flex space-x-2">
-                    {/* {isCopied && (<p className='text-gray-500 animate-fade-in-out'>Copied!</p>)} */}
-                    {/* {isCopied && (<p className='text-gray-500 animate-fade-in-out'>Copied!</p>)} */}
-                    </div>
                 </div>
 
             </div>
