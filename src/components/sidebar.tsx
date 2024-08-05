@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { CirclePlus, Menu, PanelLeft, PanelLeftClose, PanelLeftOpen, X } from 'lucide-react';
-import { Database, Tables } from '@/utils/database.types';
+import { CirclePlus,  PanelLeftClose, PanelLeftOpen, X } from 'lucide-react';
+import { Tables } from '@/utils/database.types';
 import { getEssays } from '@/services/supabaseService';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { setLogoutUser } from '@/services/apiService';
 import Image from 'next/image';

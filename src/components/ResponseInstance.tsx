@@ -1,4 +1,4 @@
-import { QueryResponse } from '@/util/model';
+import { QueryResponse } from '@/utils/queryResponseModel';
 import { Copy, RotateCcw, Sparkles, ThumbsDown, ThumbsUp } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
