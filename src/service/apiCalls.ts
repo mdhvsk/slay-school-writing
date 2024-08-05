@@ -54,7 +54,7 @@ const setLoginUser = (firstName: string, lastName: string, id: number, email: st
   localStorage.setItem('email', email)
 }
 
-const setLogoutUser = (firstName: string, lastName: string, id: number, email: string) => {
+const setLogoutUser = () => {
   localStorage.removeItem('firstName')
   localStorage.removeItem('lastName')
   localStorage.removeItem('id')

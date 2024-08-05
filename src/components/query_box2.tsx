@@ -94,7 +94,7 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
                 if (essay == null) return
                 const essay_id = essay.id
                 await insertResponse(essay_id, formData.paraphrase, output_paragraph, formData.prompt)
-                router.push({ pathname: '/output2', query: { prompt: formData.prompt, paraphrase: formData.paraphrase, output: output_paragraph, summary: output_summary } });
+                router.push({ pathname: '/output3', query: { id: String(essay_id)} });
             } else {
                 onResponse(formData.prompt, String(formData.paraphrase), output_paragraph)
                 setFormData(prevState => ({
@@ -105,6 +105,7 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
 
             console.log(output_paragraph)
             setIsLoading(false);
+            setFileName("")
 
         } catch (err) {
             console.log(err);
@@ -154,7 +155,7 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
                 <div className='flex items-center'>
                     <button className="flex items-center bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-xs mr-2" onClick={handleFileClick}>
                         <Paperclip size={16} className="mr-2" />
-                        Add content
+                        Add file
                     </button>
                     {fileName && <p className="py-2">Selected file: {fileName}</p>}
                 </div>

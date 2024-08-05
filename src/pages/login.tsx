@@ -53,7 +53,7 @@ const LoginPage = () => {
     return (
         <div className="flex flex-col md:flex-row h-screen bg-gray-100">
             <div className="w-full md:w-1/2 p-12 flex flex-col justify-center">
-                <div>
+                <div className='max-w-3xl mx-auto space-y-4'>
                     <div className="flex justify-center items-center mb-12">
                         <Image src="/slay.png" alt="Slay Logo" width={128} height={64} />
                     </div>
@@ -103,13 +103,10 @@ const LoginPage = () => {
 
                     <div className="flex justify-center space-x-4 mb-8">
                         <button className="p-2 border border-gray-300 rounded-full">
-                            <FaGoogle className="text-red-500" />
+                            <FaGoogle className="text-black" />
                         </button>
                         <button className="p-2 border border-gray-300 rounded-full">
                             <FaApple className="text-black" />
-                        </button>
-                        <button className="p-2 border border-gray-300 rounded-full">
-                            <FaFacebook className="text-blue-600" />
                         </button>
                     </div>
                 </div>

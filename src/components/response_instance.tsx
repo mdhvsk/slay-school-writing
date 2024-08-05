@@ -1,5 +1,5 @@
 import { QueryResponse } from '@/util/model';
-import { Copy, MessageSquare, RotateCcw, ThumbsDown, ThumbsUp } from 'lucide-react'
+import { Copy, MessageSquare, RotateCcw, Sparkles, ThumbsDown, ThumbsUp } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
 interface Props {
@@ -15,6 +15,13 @@ const ResponseInstance: React.FC<Props> = ({ response }) => {
   const isParaphrased = response.getisParaphrase()
   const paragraph = response.getResponse()
   const [initials, setInitials] = useState(":)")
+  const [charCount, setCharCount] = useState(0)
+  const [wordCount, setWordCount] = useState(0)
+
+  const updateCounts = (text: String) => {
+    setCharCount(text.length);
+    setWordCount(text.trim() === '' ? 0 : text.trim().split(/\s+/).length);
+};
 
   useEffect(() => {
     const firstName = localStorage.getItem('firstName')
@@ -23,8 +30,9 @@ const ResponseInstance: React.FC<Props> = ({ response }) => {
     if (firstName != null && lastName != null){
       setInitials(firstName[0] + lastName[0])
     }
+    updateCounts(paragraph)
 
-  })
+  }, [])
 
   useEffect(() => {
     if (isString(paragraph) && currentIndex < paragraph.length) {
@@ -73,7 +81,7 @@ const ResponseInstance: React.FC<Props> = ({ response }) => {
       {/* Assistant message */}
       <div className="flex items-start space-x-3">
         <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-          <MessageSquare className="w-5 h-5 text-white" />
+          <Sparkles className="w-5 h-5 text-white" />
         </div>
         <div className="bg-gray-800 rounded-lg p-3 flex-grow">
           {isParaphrased == "true" ? (<h2><strong>Paraphrase Results:</strong></h2>) : (<h2><strong>Academic Results:</strong></h2>)}
@@ -93,6 +101,9 @@ const ResponseInstance: React.FC<Props> = ({ response }) => {
         </div>
 
         <div className="flex space-x-2">
+        <div className={"flex items-center text-xs rounded-md text-right text-gray-500"}>
+                    {wordCount} words | {charCount} chars
+                </div>
           <button className="p-1 hover:bg-gray-700 rounded"><ThumbsUp className="w-4 h-4" /></button>
           <button className="p-1 hover:bg-gray-700 rounded"><ThumbsDown className="w-4 h-4" /></button>
         </div>

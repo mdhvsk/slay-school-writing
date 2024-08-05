@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MessageSquare, Copy, RotateCcw, ChevronLeft, ChevronRight, ThumbsUp, ThumbsDown } from 'lucide-react';
-import router from 'next/router';
+import router, { useRouter } from 'next/router';
 import QueryBox from '@/components/query_box';
 import Header from '@/components/header';
 import { QueryResponse } from '@/util/model';
@@ -8,6 +8,7 @@ import { QueryResponse } from '@/util/model';
 
 
 const OutputBlock = () => {
+    const router = useRouter();
     const { prompt, isParaphrase, output, summary } = router.query;
 
     const [responses, setResponses] = useState<QueryResponse[]>([])
