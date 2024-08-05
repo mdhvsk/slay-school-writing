@@ -8,15 +8,23 @@ interface Props {
 
 const ResponseInstance: React.FC<Props> = ({ response }) => {
   const [displayedText, setDisplayedText] = useState('');
-
   const [isCopied, setIsCopied] = useState(false);
-
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const prompt = response.getResponse()
+  const prompt = response.getQuery()
   const isParaphrased = response.getisParaphrase()
   const paragraph = response.getResponse()
+  const [initials, setInitials] = useState(":)")
 
+  useEffect(() => {
+    const firstName = localStorage.getItem('firstName')
+    const lastName = localStorage.getItem('lastName')
+
+    if (firstName != null && lastName != null){
+      setInitials(firstName[0] + lastName[0])
+    }
+
+  })
 
   useEffect(() => {
     if (isString(paragraph) && currentIndex < paragraph.length) {
@@ -54,7 +62,7 @@ const ResponseInstance: React.FC<Props> = ({ response }) => {
     <>
       <div className="flex items-start space-x-3">
         <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
-          <span className="text-white font-semibold">MA</span>
+          <span className="text-white font-semibold">{initials}</span>
         </div>
         <div className="bg-gray-800 rounded-lg p-3 flex-grow">
           <h2><strong>Your prompt:</strong></h2>

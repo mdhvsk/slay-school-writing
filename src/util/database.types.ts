@@ -13,23 +13,23 @@ export type Database = {
         Row: {
           created_at: string
           id: number
-          last_modified_at: string | null
-          title: string | null
-          user_id: number | null
+          last_modified_at: string
+          title: string
+          user_id: number
         }
         Insert: {
           created_at?: string
           id?: number
-          last_modified_at?: string | null
-          title?: string | null
-          user_id?: number | null
+          last_modified_at?: string
+          title: string
+          user_id: number
         }
         Update: {
           created_at?: string
           id?: number
-          last_modified_at?: string | null
-          title?: string | null
-          user_id?: number | null
+          last_modified_at?: string
+          title?: string
+          user_id?: number
         }
         Relationships: [
           {
@@ -44,54 +44,65 @@ export type Database = {
       responses: {
         Row: {
           created_at: string
+          essay_id: number
           id: number
-          isParphrased: boolean | null
-          like: Database["public"]["Enums"]["liketype"] | null
-          output: string | null
-          prompt: string | null
+          isParaphrased: boolean
+          like: Database["public"]["Enums"]["liketype"]
+          output: string
+          prompt: string
         }
         Insert: {
           created_at?: string
+          essay_id: number
           id?: number
-          isParphrased?: boolean | null
-          like?: Database["public"]["Enums"]["liketype"] | null
-          output?: string | null
-          prompt?: string | null
+          isParaphrased: boolean
+          like: Database["public"]["Enums"]["liketype"]
+          output: string
+          prompt: string
         }
         Update: {
           created_at?: string
+          essay_id?: number
           id?: number
-          isParphrased?: boolean | null
-          like?: Database["public"]["Enums"]["liketype"] | null
-          output?: string | null
-          prompt?: string | null
+          isParaphrased?: boolean
+          like?: Database["public"]["Enums"]["liketype"]
+          output?: string
+          prompt?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "responses_essay_id_fkey"
+            columns: ["essay_id"]
+            isOneToOne: false
+            referencedRelation: "essays"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       users: {
         Row: {
           created_at: string
-          email: string | null
-          first_name: string | null
+          email: string
+          first_name: string
           id: number
-          last_name: string | null
-          password: string | null
+          last_name: string
+          password: string
         }
         Insert: {
           created_at?: string
-          email?: string | null
-          first_name?: string | null
+          email: string
+          first_name: string
           id?: number
-          last_name?: string | null
-          password?: string | null
+          last_name: string
+          password: string
         }
         Update: {
           created_at?: string
-          email?: string | null
-          first_name?: string | null
+          email?: string
+          first_name?: string
           id?: number
-          last_name?: string | null
-          password?: string | null
+          last_name?: string
+          password?: string
         }
         Relationships: []
       }

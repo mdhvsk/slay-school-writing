@@ -4,6 +4,7 @@ import { ArrowRight, Paperclip, Sparkle, Sparkles } from 'lucide-react';
 import LoadingSpinner from './loading_spinner';
 import { paraphraseApi, summarizeText } from '@/service/apiCalls';
 import { useRouter } from 'next/router';
+import { insertEssay, insertResponse } from '@/service/supabaseService';
 
 interface Props {
     isHome: boolean
@@ -27,9 +28,7 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
     const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (!file) return;
-
         setFileName(file.name);
-
         if (file.type === 'application/pdf') {
             // For PDF files, we need to use a PDF.js or similar library
             console.log('PDF files require additional processing');
@@ -81,15 +80,20 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
         try {
             setIsLoading(true)
 
-            if(formData.prompt.length > 600 || formData.prompt.length == 0) {
+            if (formData.prompt.length > 600 || formData.prompt.length == 0) {
                 setIsLoading(false)
 
-                return 
+                return
             }
+            const user_id = Number(localStorage.getItem('id'))
             const output_paragraph = await paraphraseApi(formData.prompt, formData.paraphrase);
 
             if (isHome) {
                 const output_summary = await summarizeText(formData.prompt);
+                const essay = await insertEssay(user_id, output_summary)
+                if (essay == null) return
+                const essay_id = essay.id
+                await insertResponse(essay_id, formData.paraphrase, output_paragraph, formData.prompt)
                 router.push({ pathname: '/output2', query: { prompt: formData.prompt, paraphrase: formData.paraphrase, output: output_paragraph, summary: output_summary } });
             } else {
                 onResponse(formData.prompt, String(formData.paraphrase), output_paragraph)
@@ -123,11 +127,10 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
 
     const handleFileClick = () => {
         fileInputRef.current?.click();
-      };
+    };
 
     return (
         <div className='max-w-3xl mx-auto space-y-2 '>
-
             <div className="flex flex-col items-center justify-center space-x-2 ">
                 <textarea
                     id="prompt"
@@ -140,7 +143,6 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
                 >
                 </textarea>
             </div>
-
             <div className="flex justify-between items-center space-x-2">
                 <input
                     type="file"
@@ -150,30 +152,24 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
                     className="sr-only"
                 />
                 <div className='flex items-center'>
-                <button className="flex items-center bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-xs mr-2" onClick={handleFileClick}>
-                    <Paperclip size={16} className="mr-2" />
-                    Add content
-                </button>
-                {fileName && <p className="py-2">Selected file: {fileName}</p>}
-
+                    <button className="flex items-center bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-xs mr-2" onClick={handleFileClick}>
+                        <Paperclip size={16} className="mr-2" />
+                        Add content
+                    </button>
+                    {fileName && <p className="py-2">Selected file: {fileName}</p>}
                 </div>
-
                 <div className={`flex items-center text-xs rounded-md text-right ${charCount < 601 ? 'text-gray-500' : 'text-red-500'
                     }`}>
                     {wordCount} words | {charCount} chars
                 </div>
-
             </div>
-
             <div className="flex justify-between items-center space-x-2">
                 <ParaphraseToggle onToggle={handleToggle} />
-
                 <button className="flex items-center bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-md text-md" onClick={handleSubmit}>
                     SLAY IT
                     <Sparkles size={16} className="mx-2" />
 
                 </button>
-
             </div>
             <div className='flex justify-center items-center mb-8'>
                 {isLoading && (<LoadingSpinner />)}

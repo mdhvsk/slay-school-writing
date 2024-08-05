@@ -46,4 +46,19 @@ const summarizeText = async (prompt: string) => {
     }
 }
 
-export {paraphraseText as paraphraseApi, summarizeText}
+
+const setLoginUser = (firstName: string, lastName: string, id: number, email: string) => {
+  localStorage.setItem('firstName', firstName)
+  localStorage.setItem('lastName', lastName)
+  localStorage.setItem('id', id.toString())
+  localStorage.setItem('email', email)
+}
+
+const setLogoutUser = (firstName: string, lastName: string, id: number, email: string) => {
+  localStorage.removeItem('firstName')
+  localStorage.removeItem('lastName')
+  localStorage.removeItem('id')
+  localStorage.removeItem('email')
+
+}
+export {paraphraseText as paraphraseApi, summarizeText, setLoginUser, setLogoutUser}

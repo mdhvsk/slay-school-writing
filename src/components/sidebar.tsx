@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 
 interface SidebarProps {
- 
+
 }
 
 const Sidebar: React.FC<SidebarProps> = () => {
@@ -22,8 +22,9 @@ const Sidebar: React.FC<SidebarProps> = () => {
                     <li className="mb-2">Home</li>
                     <li className="mb-2">Projects</li>
                     <li className="mb-2">Recents</li>
-                    {/* Add more menu items as needed */}
-                </ul>      </div>
+                </ul>
+
+            </div>
             <button
                 className="fixed bottom-4 left-4 bg-gray-800 text-white p-2 rounded-full shadow-lg"
                 onClick={() => setIsOpen(true)}

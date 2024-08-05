@@ -33,16 +33,16 @@ const OutputBlock = () => {
     }, [])
 
 
-    useEffect(() => {
-        if (isString(output) && currentIndex < output.length) {
-            const timer = setTimeout(() => {
-                setDisplayedText((prev) => prev + output[currentIndex]);
-                setCurrentIndex((prev) => prev + 1);
-            }, 10);
+    // useEffect(() => {
+    //     if (isString(output) && currentIndex < output.length) {
+    //         const timer = setTimeout(() => {
+    //             setDisplayedText((prev) => prev + output[currentIndex]);
+    //             setCurrentIndex((prev) => prev + 1);
+    //         }, 10);
 
-            return () => clearTimeout(timer);
-        }
-    }, [currentIndex, output, 10]);
+    //         return () => clearTimeout(timer);
+    //     }
+    // }, [currentIndex, output, 10]);
 
 
     const isString = (value: unknown): value is string => {
@@ -55,8 +55,8 @@ const OutputBlock = () => {
             <div className="max-w-3xl mx-auto space-y-4">
                 <strong className='text-2xl'>{summary}</strong>
 
-                {responses.map((response) => (
-                    <ResponseInstance response={response}/>
+                {responses.map((response, index) => (
+                    <ResponseInstance key={index} response={response}/>
                 ))}
 
                 <div className="pb-2 flex justify-between items-center text-gray-400 text-sm ">
