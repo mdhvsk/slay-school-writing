@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { CirclePlus,  PanelLeftClose, PanelLeftOpen, X } from 'lucide-react';
+import { CirclePlus, PanelLeftClose, PanelLeftOpen, X } from 'lucide-react';
 import { Tables } from '@/utils/database.types';
 import { getEssays } from '@/services/supabaseService';
 import { useRouter } from 'next/router';
 import { setLogoutUser } from '@/services/apiService';
 import Image from 'next/image';
+import Link from 'next/link';
 
 
-const Sidebar = () => {
+const SidebarComponent = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [essays, setEssays] = useState<Tables<'essays'>[]>([])
     const router = useRouter();
@@ -33,7 +34,9 @@ const Sidebar = () => {
     }, [])
 
     const handleClickEssay = (essay_id: number) => {
+        setIsOpen(false)
         router.push({ pathname: '/writing', query: { id: String(essay_id) } })
+
     }
 
     const handleNewEssay = () => {
@@ -53,17 +56,15 @@ const Sidebar = () => {
 
                     <X size={24} />
                 </button>
-
-
-                <h2 className="text-2xl mb-8">
+                <Link className="text-2xl font-semibold mb-8" href={'/landing'}>
                     <Image src="/slay-white.png" alt="Slay Logo" width={64} height={32} />
-                </h2>
-                <button className='flex text-blue-500 font-medium hover:text-blue-400' onClick={() => { handleNewEssay() }}><CirclePlus className='mr-2' size={24} />New Essay</button>
+                </Link>
+                <button className='flex text-blue-500 font-medium hover:text-blue-400 mt-8' onClick={() => { handleNewEssay() }}><CirclePlus className='mr-2' size={24} />New Essay</button>
                 <ul>
 
                     <li className='font-medium mb-4 mt-6 text-gray-400'>Previous Essays</li>
                     {essays.map((essay) => (
-                        <li key={essay.id} className='mb-4 hover:bg-gray-500' onClick={() => handleClickEssay(essay.id)}>{essay.title.substring(0, 20)}...</li>
+                        <button key={essay.id} className='mb-4 hover:text-gray-300' onClick={() => handleClickEssay(essay.id)}>{essay.title.substring(0, 20)}...</button>
                     ))}
 
                 </ul>
@@ -96,4 +97,4 @@ const Sidebar = () => {
     );
 };
 
-export default Sidebar;
+export default SidebarComponent;

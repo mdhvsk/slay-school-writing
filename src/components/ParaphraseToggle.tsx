@@ -20,7 +20,7 @@ const ParaphraseToggle: React.FC<StyleToggleProps> = ({ onToggle }) => {
       <button
         onClick={handleToggle}
         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${
-          mode === false ? 'bg-indigo-600' : 'bg-blue-200'
+          mode === false ? 'bg-indigo-600' : 'bg-indigo-300'
         }`}
       >
         <span className="sr-only">Use setting</span>

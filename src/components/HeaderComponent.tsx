@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import Image from 'next/image';
 
-const Header = () => {
+const HeaderComponent = () => {
     return (
         <header className="flex justify-between items-center mb-8">
             <Link className="text-2xl font-semibold" href={'/landing'}>                       
@@ -12,4 +12,4 @@ const Header = () => {
         </header>)
 }
 
-export default Header
+export default HeaderComponent

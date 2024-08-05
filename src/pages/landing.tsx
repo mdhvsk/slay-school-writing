@@ -1,13 +1,15 @@
 import React, {useEffect, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
-import Header from '@/components/Header';
-import Sidebar from '@/components/Sidebar';
+import HeaderComponent from '@/components/HeaderComponent';
+import SidebarComponent from '@/components/SidebarComponent';
 import SearchBar from '@/components/SearchBar';
 import { getEssays } from '@/services/supabaseService';
 import { Tables } from '@/utils/database.types';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { useRouter } from 'next/router';
 
 const HomePage = () => {
+    const router = useRouter()
     const [name, setName] = useState('')
     const [essays, setEssays] = useState<Tables<'essays'>[]>([])
     const [isLoading, setIsLoading] = useState(false)
@@ -27,6 +29,9 @@ const HomePage = () => {
         } else {
             return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
         }
+    }
+    const handleClickEssay = (essay_id: number) => {
+        router.push({ pathname: '/writing', query: { id: String(essay_id) } })
     }
 
     useEffect(() => {
@@ -48,8 +53,8 @@ const HomePage = () => {
     
     return (
         <div className="bg-gray-900 text-gray-200 min-h-screen p-8">
-            <Header />
-            <Sidebar />
+            <HeaderComponent />
+            <SidebarComponent />
             <h2 className="text-4xl font-light mb-8 flex justify-center">
                 Hi {name}!
             </h2>
@@ -62,14 +67,12 @@ const HomePage = () => {
                     {isLoading && <LoadingSpinner/> }
 
                 </h3>
-
                 <div className="grid grid-cols-3 gap-4">
-
                     {essays.slice(0, 6).map((essay, index) => (
-                        <div key={index} className="bg-gray-800 p-4 rounded-lg">
+                        <button key={index} className="bg-gray-800 p-4 rounded-lg hover:bg-gray-600" onClick={() => handleClickEssay(essay.id)}>
                             <h4 className="font-medium mb-2">{essay.title}</h4>
                             <p className="text-sm text-gray-400">{getRelativeTimeString(essay.last_modified_at)}</p>
-                        </div>
+                        </button>
                     ))}
 
                 </div>

@@ -164,7 +164,7 @@ const SearchBar: React.FC<Props> = ({ isHome, onResponse }) => {
             </div>
             <div className="flex justify-between items-center space-x-2">
                 <ParaphraseToggle onToggle={handleToggle} />
-                <button className="flex items-center bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-md text-md" onClick={handleSubmit}>
+                <button className="flex items-center bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-md text-md font-semibold" onClick={handleSubmit}>
                     SLAY IT
                     <Sparkles size={16} className="mx-2" />
 

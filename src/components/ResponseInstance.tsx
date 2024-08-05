@@ -4,9 +4,10 @@ import React, { useEffect, useState } from 'react'
 
 interface Props {
   response: QueryResponse
+  isNew: boolean
 }
 
-const ResponseInstance: React.FC<Props> = ({ response }) => {
+const ResponseInstance: React.FC<Props> = ({ response, isNew }) => {
   const [displayedText, setDisplayedText] = useState('');
   const [isCopied, setIsCopied] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -24,6 +25,10 @@ const ResponseInstance: React.FC<Props> = ({ response }) => {
 };
 
   useEffect(() => {
+    if(isNew == false) {
+      setDisplayedText(paragraph)
+      setCurrentIndex(paragraph.length-1)
+    }
     const firstName = localStorage.getItem('firstName')
     const lastName = localStorage.getItem('lastName')
     if (firstName != null && lastName != null){
@@ -34,7 +39,7 @@ const ResponseInstance: React.FC<Props> = ({ response }) => {
   }, [])
 
   useEffect(() => {
-    if (isString(paragraph) && currentIndex < paragraph.length) {
+    if (isNew == true && isString(paragraph) && currentIndex < paragraph.length) {
       const timer = setTimeout(() => {
         setDisplayedText((prev) => prev + paragraph[currentIndex]);
         setCurrentIndex((prev) => prev + 1);
