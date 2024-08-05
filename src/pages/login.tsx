@@ -99,8 +99,8 @@ const LoginPage = () => {
 
                     <div className="text-center text-sm text-gray-500 flex flex-col">
                         <p>For demos:</p> 
-                        <p>Email: 'leslieknope@gmail.com' or 'tonystark@gmail.com'</p>
-                        <p>Password: 'password'</p>
+                        <p>Email: leslieknope@gmail.com or tonystark@gmail.com</p>
+                        <p>Password: password</p>
                     </div>
                     <div className="text-center text-sm text-gray-500 mb-4">Or Continue With</div>
 
