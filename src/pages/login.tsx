@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from 'react';
 import Image from 'next/image';
-import { FaGoogle, FaApple} from 'react-icons/fa';
+import { FaGoogle, FaApple } from 'react-icons/fa';
 import { getUserByEmail } from '@/services/supabaseService';
 import { setLoginUser } from '@/services/apiService';
 import { useRouter } from 'next/router';
@@ -17,7 +17,7 @@ const LoginPage = () => {
         email: '',
         password: ''
     });
-    
+
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -97,7 +97,11 @@ const LoginPage = () => {
                         </button>
                     </form>
 
-
+                    <div className="text-center text-sm text-gray-500 flex flex-col">
+                        <p>For demos:</p> 
+                        <p>Email: 'leslieknope@gmail.com' or 'tonystark@gmail.com'</p>
+                        <p>Password: 'password'</p>
+                    </div>
                     <div className="text-center text-sm text-gray-500 mb-4">Or Continue With</div>
 
                     <div className="flex justify-center space-x-4 mb-8">

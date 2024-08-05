@@ -12,29 +12,31 @@ const ResponseInstance: React.FC<Props> = ({ response, isNew }) => {
   const [isCopied, setIsCopied] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const prompt = response.getQuery()
-  const isParaphrased = response.getisParaphrase()
-  const paragraph = response.getResponse()
-  const [initials, setInitials] = useState(":)")
-  const [charCount, setCharCount] = useState(0)
-  const [wordCount, setWordCount] = useState(0)
+  const prompt = response.getQuery();
+  const isParaphrased = response.getisParaphrase();
+  const paragraph = response.getResponse();
+  const [initials, setInitials] = useState(":)");
+  const [charCount, setCharCount] = useState(0);
+  const [wordCount, setWordCount] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
 
   const updateCounts = (text: String) => {
     setCharCount(text.length);
     setWordCount(text.trim() === '' ? 0 : text.trim().split(/\s+/).length);
-};
+  };
 
   useEffect(() => {
-    if(isNew == false) {
-      setDisplayedText(paragraph)
-      setCurrentIndex(paragraph.length-1)
+    if (isNew == false) {
+      setDisplayedText(paragraph);
+      setCurrentIndex(paragraph.length - 1);
     }
-    const firstName = localStorage.getItem('firstName')
-    const lastName = localStorage.getItem('lastName')
-    if (firstName != null && lastName != null){
-      setInitials(firstName[0] + lastName[0])
+    const firstName = localStorage.getItem('firstName');
+    const lastName = localStorage.getItem('lastName');
+    if (firstName != null && lastName != null) {
+      setInitials(firstName[0] + lastName[0]);
     }
-    updateCounts(paragraph)
+    updateCounts(paragraph);
 
   }, [])
 
@@ -43,31 +45,43 @@ const ResponseInstance: React.FC<Props> = ({ response, isNew }) => {
       const timer = setTimeout(() => {
         setDisplayedText((prev) => prev + paragraph[currentIndex]);
         setCurrentIndex((prev) => prev + 1);
-      }, 10);
+      }, 5);
 
       return () => clearTimeout(timer);
     }
-  }, [currentIndex, paragraph, 10]);
+  }, [currentIndex, paragraph, 5]);
 
 
   const isString = (value: unknown): value is string => {
-    return typeof value === 'string'
+    return typeof value === 'string';
   }
 
   const handleOnCopy = async () => {
     try {
       if (isString(paragraph)) {
         await navigator.clipboard.writeText(paragraph);
-        console.log("Copied")
-        setIsCopied(true)
+        setIsCopied(true);
         setTimeout(() => {
           setIsCopied(false)
-        }, 2000)
+        }, 2000);
 
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
+  }
+
+  const handleLiked = () => {
+    setIsLiked(true)
+    setTimeout(() => {
+      setIsLiked(false);
+    }, 1000)
+  }
+  const handleDisliked = () => {
+    setIsDisliked(true)
+    setTimeout(() => {
+      setIsDisliked(false)
+    }, 1000)
   }
 
   return (
@@ -98,16 +112,15 @@ const ResponseInstance: React.FC<Props> = ({ response, isNew }) => {
       <div className="flex justify-between items-center text-gray-400 text-sm ">
         <div className="flex space-x-2">
           <button className="p-1 hover:bg-gray-700 rounded" onClick={handleOnCopy}><Copy className="w-4 h-4" /></button>
-
-          <button className="p-1 hover:bg-gray-700 rounded"><RotateCcw className="w-4 h-4" /></button>
+          <div className={"flex items-center text-xs rounded-md text-right text-gray-500"}>
+            {wordCount} words | {charCount} chars
+          </div>
         </div>
 
         <div className="flex space-x-2">
-        <div className={"flex items-center text-xs rounded-md text-right text-gray-500"}>
-                    {wordCount} words | {charCount} chars
-                </div>
-          <button className="p-1 hover:bg-gray-700 rounded"><ThumbsUp className="w-4 h-4" /></button>
-          <button className="p-1 hover:bg-gray-700 rounded"><ThumbsDown className="w-4 h-4" /></button>
+          
+          <button className="p-1 hover:bg-gray-700 rounded"><ThumbsUp className="w-4 h-4" onClick={handleLiked} /></button>
+          <button className="p-1 hover:bg-gray-700 rounded"><ThumbsDown className="w-4 h-4" onClick={handleDisliked} /></button>
         </div>
       </div>
 
@@ -116,6 +129,9 @@ const ResponseInstance: React.FC<Props> = ({ response, isNew }) => {
           {isCopied && (<p className='text-gray-500 animate-fade-in-out'>Copied!</p>)}
         </div>
         <div className="flex space-x-2">
+          {isLiked && (<p className='text-gray-500 animate-fade-in-out'>Liked!</p>)}
+          {isDisliked && (<p className='text-gray-500 animate-fade-in-out'>Disliked!</p>)}
+
         </div>
       </div>
 
