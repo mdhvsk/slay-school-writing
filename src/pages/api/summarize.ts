@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { openai } from '@/util/openai';
-import { summarize_content_system, summarize_content_user} from '@/util/prompts';
+import { openai } from '@/utils/openai';
+import { summarize_content_system, summarize_content_user} from '@/utils/prompts';
 type ResponseData = {
     message: Object
 }

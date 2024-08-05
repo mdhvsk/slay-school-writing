@@ -1,4 +1,4 @@
-import { Database } from '@/util/database.types';
+import { Database } from '@/utils/database.types';
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
 class SupabaseClientSingleton {

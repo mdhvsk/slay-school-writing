@@ -1,8 +1,8 @@
 import React, { FormEvent, useState } from 'react';
 import Image from 'next/image';
-import { FaGoogle, FaApple, FaFacebook } from 'react-icons/fa';
-import { getUserByEmail } from '@/service/supabaseService';
-import { setLoginUser } from '@/service/apiCalls';
+import { FaGoogle, FaApple} from 'react-icons/fa';
+import { getUserByEmail } from '@/services/supabaseService';
+import { setLoginUser } from '@/services/apiService';
 import { useRouter } from 'next/router';
 
 interface FormData {
@@ -13,11 +13,11 @@ interface FormData {
 const LoginPage = () => {
 
     const router = useRouter();
-
     const [formData, setFormData] = useState<FormData>({
         email: '',
         password: ''
     });
+    
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -40,7 +40,6 @@ const LoginPage = () => {
             const userData = response[0]
             setLoginUser(userData.first_name, userData.last_name, userData.id, userData.email)
             router.push('/landing')
-            console.log('Signup successful!', formData);
         } catch (err) {
             setError('Invalid email or password. Try again');
             console.error('Signin error:', err);

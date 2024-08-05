@@ -1,5 +1,5 @@
 import { QueryResponse } from '@/util/model';
-import { Copy, MessageSquare, RotateCcw, Sparkles, ThumbsDown, ThumbsUp } from 'lucide-react'
+import { Copy, RotateCcw, Sparkles, ThumbsDown, ThumbsUp } from 'lucide-react'
 import React, { useEffect, useState } from 'react'
 
 interface Props {
@@ -26,7 +26,6 @@ const ResponseInstance: React.FC<Props> = ({ response }) => {
   useEffect(() => {
     const firstName = localStorage.getItem('firstName')
     const lastName = localStorage.getItem('lastName')
-
     if (firstName != null && lastName != null){
       setInitials(firstName[0] + lastName[0])
     }
@@ -78,7 +77,6 @@ const ResponseInstance: React.FC<Props> = ({ response }) => {
         </div>
       </div>
 
-      {/* Assistant message */}
       <div className="flex items-start space-x-3">
         <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
           <Sparkles className="w-5 h-5 text-white" />
@@ -92,7 +90,6 @@ const ResponseInstance: React.FC<Props> = ({ response }) => {
         </div>
       </div>
 
-      {/* Controls */}
       <div className="flex justify-between items-center text-gray-400 text-sm ">
         <div className="flex space-x-2">
           <button className="p-1 hover:bg-gray-700 rounded" onClick={handleOnCopy}><Copy className="w-4 h-4" /></button>
@@ -113,10 +110,7 @@ const ResponseInstance: React.FC<Props> = ({ response }) => {
         <div className="flex space-x-2">
           {isCopied && (<p className='text-gray-500 animate-fade-in-out'>Copied!</p>)}
         </div>
-
         <div className="flex space-x-2">
-          {/* {isCopied && (<p className='text-gray-500 animate-fade-in-out'>Copied!</p>)} */}
-          {/* {isCopied && (<p className='text-gray-500 animate-fade-in-out'>Copied!</p>)} */}
         </div>
       </div>
 

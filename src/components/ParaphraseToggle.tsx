@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 
-type StyleMode = 'paraphrase' | 'academic';
-
 interface StyleToggleProps {
   onToggle: () => void;
 }
@@ -10,7 +8,6 @@ const ParaphraseToggle: React.FC<StyleToggleProps> = ({ onToggle }) => {
   const [mode, setMode] = useState<boolean>(false);
 
   const handleToggle = () => {
-    
     setMode(!mode);
     onToggle();
   };

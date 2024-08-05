@@ -1,41 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { MessageSquare, Copy, RotateCcw, ChevronLeft, ChevronRight, ThumbsUp, ThumbsDown } from 'lucide-react';
 import router, { useRouter } from 'next/router';
-import QueryBox from '@/components/query_box';
-import Header from '@/components/header';
-import ResponseInstance from '@/components/response_instance';
-import { QueryResponse } from '@/util/model';
-import QueryBox2 from '@/components/query_box2';
-import { getEssay, getResponses, insertResponse } from '@/service/supabaseService';
-import Sidebar from '@/components/sidebar';
+import ResponseInstance from '@/components/ResponseInstance';
+import { QueryResponse } from '@/utils/queryResponseModel';
+import SearchBar from '@/components/SearchBar';
+import { getEssay, getResponses, insertResponse } from '@/services/supabaseService';
+import Sidebar from '@/components/Sidebar';
+import Header from '@/components/Header';
 
-const OutputBlock2 = () => {
+const WritingOutput = () => {
     const router = useRouter();
     const { id } = router.query;
-
     const [responses, setResponses] = useState<QueryResponse[]>([]);
     const [summary, setSummary] = useState("")
 
-    const addResponse = (query: unknown, isPara: unknown, paragraph: unknown) => {
-        if (isString(query) && isString(isPara) && isString(paragraph)) {
-            try {
-                const query_response = new QueryResponse(query, isPara, paragraph);
-                console.log("Created QueryResponse:", query_response);
-                setResponses((prev) => [...prev, query_response]);
-
-                insertResponse(Number(id), Boolean(isPara), paragraph, query)
-            } catch (error) {
-                console.error("Error creating QueryResponse:", error);
-            }
-        }
-
-    }
 
     const populateResponses = (query: unknown, isPara: unknown, paragraph: unknown) => {
         if (isString(query) && isString(isPara) && isString(paragraph)) {
             try {
                 const query_response = new QueryResponse(query, isPara, paragraph);
-                console.log("Created QueryResponse:", query_response);
                 setResponses((prev) => [...prev, query_response]);
 
             } catch (error) {
@@ -92,11 +74,11 @@ const OutputBlock2 = () => {
                     <ResponseInstance key={index} response={response} />
                 ))}
             </div>
-            <QueryBox2 isHome={false} onResponse={postResponse} />
+            <SearchBar isHome={false} onResponse={postResponse} />
 
 
         </div>
     );
 };
 
-export default OutputBlock2;
+export default WritingOutput;

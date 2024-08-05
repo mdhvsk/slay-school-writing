@@ -4,7 +4,6 @@ import axios from "axios"
 const paraphraseText = async (prompt: String, paraphrase: boolean) => {
 
     const url = `api/paraphrase`
-    console.log(url)
     try {
         const response = await axios.post(url, {"prompt": prompt, "paraphrase": paraphrase}, {
             headers: {
@@ -27,7 +26,6 @@ const paraphraseText = async (prompt: String, paraphrase: boolean) => {
 
 const summarizeText = async (prompt: string) => {
   const url = `api/summarize`
-    console.log(url)
     try {
         const response = await axios.post(url, {"prompt": prompt}, {
             headers: {

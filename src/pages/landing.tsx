@@ -1,20 +1,16 @@
-import React, { ChangeEvent, FormEvent, MouseEventHandler, useEffect, useRef, useState } from 'react';
-import { Search, ChevronDown, Plus, ExternalLink, Paperclip, ArrowRight } from 'lucide-react';
-import Header from '@/components/header';
-import QueryBox from '@/components/query_box';
-import Sidebar from '@/components/sidebar';
-import QueryBox2 from '@/components/query_box2';
-import { getEssays, getUserByEmail } from '@/service/supabaseService';
-import { Tables } from '@/util/database.types';
-import LoadingSpinner from '@/components/loading_spinner';
+import React, {useEffect, useState } from 'react';
+import { ChevronDown } from 'lucide-react';
+import Header from '@/components/Header';
+import Sidebar from '@/components/Sidebar';
+import SearchBar from '@/components/SearchBar';
+import { getEssays } from '@/services/supabaseService';
+import { Tables } from '@/utils/database.types';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 const HomePage = () => {
     const [name, setName] = useState('')
     const [essays, setEssays] = useState<Tables<'essays'>[]>([])
     const [isLoading, setIsLoading] = useState(false)
-
-
-
 
     const getRelativeTimeString = (timestamp: string): string  =>{
         const now = new Date();
@@ -43,22 +39,21 @@ const HomePage = () => {
         const fetchEssays = async () => {
             const user_id = Number(localStorage.getItem('id'))
             const data = await getEssays(user_id)
-            console.log(data)
             setEssays(data?.reverse() || [])
             setIsLoading(false)
         };
         fetchEssays();
 
     }, [])
+    
     return (
         <div className="bg-gray-900 text-gray-200 min-h-screen p-8">
             <Header />
-
             <Sidebar />
             <h2 className="text-4xl font-light mb-8 flex justify-center">
                 Hi {name}!
             </h2>
-            <QueryBox2 isHome={true} onResponse={() => { }} />
+            <SearchBar isHome={true} onResponse={() => { }} />
 
             <div className="max-w-3xl mx-auto space-y-2 my-4">
                 <h3 className="flex items-center text-lg mb-4">

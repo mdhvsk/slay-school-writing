@@ -1,17 +1,17 @@
 import React, { FormEvent, useEffect, useRef, useState } from 'react'
-import ParaphraseToggle from './paraphrase_toggle';
-import { ArrowRight, Paperclip, Sparkle, Sparkles } from 'lucide-react';
-import LoadingSpinner from './loading_spinner';
-import { paraphraseApi, summarizeText } from '@/service/apiCalls';
+import ParaphraseToggle from './ParaphraseToggle';
+import { Paperclip, Sparkles } from 'lucide-react';
+import LoadingSpinner from './LoadingSpinner';
+import { paraphraseApi, summarizeText } from '@/services/apiService';
 import { useRouter } from 'next/router';
-import { insertEssay, insertResponse } from '@/service/supabaseService';
+import { insertEssay, insertResponse } from '@/services/supabaseService';
 
 interface Props {
     isHome: boolean
     onResponse: (prompt: string, isParaphrase: string, paragraph: string) => void
 }
 
-const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
+const SearchBar: React.FC<Props> = ({ isHome, onResponse }) => {
     const [formData, setFormData] = useState({
         prompt: '',
         paraphrase: false,
@@ -57,7 +57,6 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
     };
 
     const handleToggle = () => {
-        console.log(formData.paraphrase)
         setFormData(prevState => ({
             ...prevState,
             paraphrase: !prevState.paraphrase
@@ -82,9 +81,9 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
 
             if (formData.prompt.length > 600 || formData.prompt.length == 0) {
                 setIsLoading(false)
-
                 return
             }
+            
             const user_id = Number(localStorage.getItem('id'))
             const output_paragraph = await paraphraseApi(formData.prompt, formData.paraphrase);
 
@@ -94,7 +93,7 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
                 if (essay == null) return
                 const essay_id = essay.id
                 await insertResponse(essay_id, formData.paraphrase, output_paragraph, formData.prompt)
-                router.push({ pathname: '/output3', query: { id: String(essay_id)} });
+                router.push({ pathname: '/writing', query: { id: String(essay_id)} });
             } else {
                 onResponse(formData.prompt, String(formData.paraphrase), output_paragraph)
                 setFormData(prevState => ({
@@ -103,7 +102,6 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
                 }));
             }
 
-            console.log(output_paragraph)
             setIsLoading(false);
             setFileName("")
 
@@ -179,4 +177,4 @@ const QueryBox2: React.FC<Props> = ({ isHome, onResponse }) => {
     )
 }
 
-export default QueryBox2
+export default SearchBar
