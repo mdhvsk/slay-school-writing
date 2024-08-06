@@ -55,7 +55,6 @@ const WritingOutput = () => {
         <div className="bg-gray-900 text-white min-h-screen p-8">
             <HeaderComponent />
             <SidebarComponent/>                
-
             <div className="max-w-3xl mx-auto space-y-4">
                 <strong className='text-2xl'>{summary}</strong>
                 {responses.map((response, index) => (
