@@ -18,13 +18,13 @@ Slay school writing allows users to:
 * Next.js
 * Typescript
 * Supabase
-* Tailwind
+* Tailwind CSS
 * Vercel
 
   
 ## Design Choices 
 
-1. **NextJS with Vercel**: Simplifies building server-rendered React applications while Vercel provides a seamless deployment platform optimized for Next.js projects.
+1. **Next.js with Vercel**: Simplifies building server-rendered React applications while Vercel provides a seamless deployment platform optimized for Next.js projects.
 2. **Supabase as Backend**: Selected for its simplicity in setup, cost-effectiveness, and powerful features such as Auth and Postgres Database,
 3. **Tailwind CSS**: Utilized Tailwind to ensure a rapid and flexible UI development.
 
