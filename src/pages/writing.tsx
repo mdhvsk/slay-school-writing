@@ -52,7 +52,7 @@ const WritingOutput = () => {
     }, [id])
 
     return (
-        <div className="bg-gray-900 text-white min-h-screen px-8 py-4">
+        <div className="bg-gray-900 text-white min-h-screen p-8">
             <HeaderComponent />
             <SidebarComponent/>                
 

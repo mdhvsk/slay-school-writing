@@ -56,7 +56,7 @@ const SidebarComponent = () => {
 
                     <X size={24} />
                 </button>
-                <Link className="text-2xl font-semibold mb-8" href={'/landing'}>
+                <Link className="mb-8" href={'/landing'}>
                     <Image src="/slay-white.png" alt="Slay Logo" width={64} height={32} />
                 </Link>
                 <button className='flex text-blue-500 font-medium hover:text-blue-400 mt-8' onClick={() => { handleNewEssay() }}><CirclePlus className='mr-2' size={24} />New Essay</button>

@@ -1,10 +1,10 @@
 import React, { FormEvent, useEffect, useRef, useState } from 'react'
-import ParaphraseToggle from './ParaphraseToggle';
 import { Paperclip, Sparkles } from 'lucide-react';
 import LoadingSpinner from './LoadingSpinner';
 import { paraphraseApi, summarizeText } from '@/services/apiService';
 import { useRouter } from 'next/router';
 import { insertEssay, insertResponse } from '@/services/supabaseService';
+import SegmentedButton from './SegmentedButton';
 
 interface Props {
     isHome: boolean
@@ -151,7 +151,7 @@ const SearchBar: React.FC<Props> = ({ isHome, onResponse }) => {
                     className="sr-only"
                 />
                 <div className='flex items-center'>
-                    <button className="flex items-center bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-xs mr-2" onClick={handleFileClick}>
+                    <button className="flex items-center bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-md text-xs mt-2 mr-2" onClick={handleFileClick}>
                         <Paperclip size={16} className="mr-2" />
                         Add file
                     </button>
@@ -163,8 +163,9 @@ const SearchBar: React.FC<Props> = ({ isHome, onResponse }) => {
                 </div>
             </div>
             <div className="flex justify-between items-center space-x-2">
-                <ParaphraseToggle onToggle={handleToggle} />
-                <button className="flex items-center bg-blue-700 hover:bg-blue-600 px-4 py-2 rounded-md text-md font-semibold" onClick={handleSubmit}>
+                {/* <ParaphraseToggle onToggle={handleToggle} /> */}
+                <SegmentedButton onToggle={handleToggle}/>
+                <button className="flex items-center bg-blue-700 hover:bg-blue-600 px-6 py-3 rounded-md text-md font-semibold" onClick={handleSubmit}>
                     SLAY IT
                     <Sparkles size={16} className="mx-2" />
 
