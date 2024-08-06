@@ -15,7 +15,7 @@ Slay school writing allows users to:
 
 ## Tech Used: 
 * React
-* NextJS
+* Next.js
 * Typescript
 * Supabase
 * Tailwind
