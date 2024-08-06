@@ -20,7 +20,7 @@ Slay school writing allows users to:
 * Supabase
 * Tailwind CSS
 * Vercel
-* OpenAI GPT 4-o mini model
+* OpenAI GPT 4o mini model
 
   
 ## Design Choices 
